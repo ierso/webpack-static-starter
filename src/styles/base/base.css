@@ -1,0 +1,10 @@
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+body {
+  --color: blue;
+  border: solid 5px var(--color);
+}
