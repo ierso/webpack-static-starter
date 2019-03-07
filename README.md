@@ -16,6 +16,4 @@ Run `npm serve` for production build and serve.
 
 ### Overview
 
-Add new pages in ./src/pages/
-
 For Webpack to recognize newly built pages, ./pages.js must be updated.
