@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>My homepage</title>
+    <title><%= htmlWebpackPlugin.options.title %></title>
     <meta charset="UTF-8" />
     <meta http-equiv="cache-control" content="no-cache" />
     <meta http-equiv="pragma" content="no-cache" />
@@ -12,11 +12,5 @@
     />
   </head>
   <body>
-    <%= require('html-loader!../partials/nav.html') %>
-    <h1 class="page-title">
-      <i class="fab fa-fort-awesome"></i>
-      HOMEPAGE
-    </h1>
-    <%= require('html-loader!../partials/footer.html') %>
-  </body>
-</html>
+
+  <%- include ./nav %>

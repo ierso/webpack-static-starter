@@ -7,6 +7,7 @@ const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const postcssImport = require("postcss-import");
 const postcssPresetEnv = require("postcss-preset-env");
 const buildPath = path.resolve(__dirname, "dist");
+const pages = require("./pages");
 
 module.exports = {
   mode: "production",
@@ -25,6 +26,10 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.ejs$/,
+        use: "ejs-compiled-loader"
+      },
+      {
         test: /\.css$/,
         use: [
           MiniCssExtractPlugin.loader,
@@ -41,19 +46,18 @@ module.exports = {
     ]
   },
 
+  // name title meta
+
   plugins: [
     new CleanWebpackPlugin({ buildPath }),
-    new HtmlWebpackPlugin({
-      template: "./src/pages/index.html",
-      inject: true,
-      chunks: ["index"],
-      filename: "index.html"
-    }),
-    new HtmlWebpackPlugin({
-      template: "./src/pages/about.html",
-      inject: true,
-      chunks: ["index"],
-      filename: "about.html"
+    ...pages.map(page => {
+      return new HtmlWebpackPlugin({
+        template: `./src/pages/${page.name}.ejs`,
+        title: pages.title,
+        inject: true,
+        chunks: ["index"],
+        filename: `${page.name}.html`
+      });
     }),
     new MiniCssExtractPlugin({
       filename: "[name].[contenthash:6].css",
