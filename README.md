@@ -1,6 +1,6 @@
 # webpack-static-starter
 
-A barebones starter project using a modern build system, PostCSS, and EJS.
+A barebones starter project using a modern build system, PostCSS, EJS, and Vue.
 
 ## Build & development
 
