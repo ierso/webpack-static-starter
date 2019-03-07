@@ -2,6 +2,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
 const postcssImport = require("postcss-import");
 const postcssPresetEnv = require("postcss-preset-env");
+const VueLoaderPlugin = require("vue-loader/lib/plugin");
 const pages = require("./pages");
 
 console.log(pages);
@@ -16,12 +17,24 @@ module.exports = {
     port: 8080
   },
 
+  resolve: {
+    alias: {
+      vue$: "vue/dist/vue.esm.js"
+    },
+    extensions: ["*", ".js", ".vue", ".json"]
+  },
+
   module: {
     rules: [
+      {
+        test: /\.vue$/,
+        loader: "vue-loader"
+      },
       {
         test: /\.ejs$/,
         use: "ejs-compiled-loader"
       },
+
       {
         test: /\.css$/,
         use: [
@@ -43,6 +56,7 @@ module.exports = {
   },
 
   plugins: [
+    new VueLoaderPlugin(),
     ...pages.map(page => {
       return new HtmlWebpackPlugin({
         template: `./src/pages/${page.name}.ejs`,

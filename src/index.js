@@ -1,2 +1,9 @@
 console.log("testing");
-require("./styles/main.css");
+import "./styles/main.css";
+import Vue from "vue";
+import Components from "./components";
+
+new Vue({
+  el: "#app",
+  components: Components
+});
