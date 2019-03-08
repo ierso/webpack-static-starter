@@ -7,6 +7,7 @@ const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const postcssImport = require("postcss-import");
 const postcssPresetEnv = require("postcss-preset-env");
 const buildPath = path.resolve(__dirname, "dist");
+const VueLoaderPlugin = require("vue-loader/lib/plugin");
 const pages = require("./pages");
 
 module.exports = {
@@ -25,6 +26,10 @@ module.exports = {
 
   module: {
     rules: [
+      {
+        test: /\.vue$/,
+        loader: "vue-loader"
+      },
       {
         test: /\.ejs$/,
         use: "ejs-compiled-loader"
@@ -50,6 +55,7 @@ module.exports = {
 
   plugins: [
     new CleanWebpackPlugin({ buildPath }),
+    new VueLoaderPlugin(),
     ...pages.map(page => {
       return new HtmlWebpackPlugin({
         template: `./src/pages/${page.name}.ejs`,
