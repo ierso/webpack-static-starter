@@ -24,8 +24,25 @@ module.exports = {
     path: buildPath
   },
 
+  resolve: {
+    alias: {
+      vue$: "vue/dist/vue.esm.js"
+    },
+    extensions: ["*", ".js", ".vue", ".json"]
+  },
+
   module: {
     rules: [
+      {
+        test: /\.m?js$/,
+        exclude: /(node_modules|bower_components)/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ["@babel/preset-env"]
+          }
+        }
+      },
       {
         test: /\.vue$/,
         loader: "vue-loader"
@@ -59,10 +76,14 @@ module.exports = {
     ...pages.map(page => {
       return new HtmlWebpackPlugin({
         template: `./src/pages/${page.name}.ejs`,
-        title: pages.title,
+        title: page.title,
         inject: true,
         chunks: ["index"],
-        filename: `${page.name}.html`
+        filename: `${page.name}.html`,
+        minify: {
+          collapseWhitespace: true,
+          removeComments: true
+        }
       });
     }),
     new MiniCssExtractPlugin({

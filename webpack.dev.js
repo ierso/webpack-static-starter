@@ -9,6 +9,7 @@ console.log(pages);
 
 module.exports = {
   mode: "development",
+
   entry: {
     index: "./src/index.js"
   },
@@ -27,6 +28,16 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.m?js$/,
+        exclude: /(node_modules|bower_components)/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ["@babel/preset-env"]
+          }
+        }
+      },
+      {
         test: /\.vue$/,
         loader: "vue-loader"
       },
@@ -34,7 +45,6 @@ module.exports = {
         test: /\.ejs$/,
         use: "ejs-compiled-loader"
       },
-
       {
         test: /\.css$/,
         use: [
@@ -60,7 +70,7 @@ module.exports = {
     ...pages.map(page => {
       return new HtmlWebpackPlugin({
         template: `./src/pages/${page.name}.ejs`,
-        title: pages.title,
+        title: page.title,
         inject: true,
         chunks: ["index"],
         filename: `${page.name}.html`
