@@ -1,11 +1,7 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
-const postcssImport = require("postcss-import");
-const postcssPresetEnv = require("postcss-preset-env");
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
 const pages = require("./pages");
-
-console.log(pages);
 
 module.exports = {
   mode: "development",
@@ -46,21 +42,8 @@ module.exports = {
         use: "ejs-compiled-loader"
       },
       {
-        test: /\.css$/,
-        use: [
-          "style-loader",
-          { loader: "css-loader", options: { importLoaders: 1 } },
-          {
-            loader: "postcss-loader",
-            options: {
-              ident: "postcss",
-              plugins: () => [
-                postcssImport(),
-                postcssPresetEnv(/* pluginOptions */)
-              ]
-            }
-          }
-        ]
+        test: /\.scss$/,
+        use: ["style-loader", "css-loader", "sass-loader"]
       }
     ]
   },

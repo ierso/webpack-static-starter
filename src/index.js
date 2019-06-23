@@ -1,5 +1,6 @@
 console.log("testing");
-import "./styles/main.css";
+import "./styles/main.scss";
+
 import Vue from "vue";
 import Components from "./components";
 

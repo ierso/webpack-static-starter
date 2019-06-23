@@ -4,8 +4,6 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
-const postcssImport = require("postcss-import");
-const postcssPresetEnv = require("postcss-preset-env");
 const buildPath = path.resolve(__dirname, "dist");
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
 const pages = require("./pages");
@@ -52,18 +50,8 @@ module.exports = {
         use: "ejs-compiled-loader"
       },
       {
-        test: /\.css$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          { loader: "css-loader", options: { importLoaders: 1 } },
-          {
-            loader: "postcss-loader",
-            options: {
-              ident: "postcss",
-              plugins: () => [postcssImport(), postcssPresetEnv()]
-            }
-          }
-        ]
+        test: /\.scss$/,
+        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"]
       }
     ]
   },
